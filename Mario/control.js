@@ -1,24 +1,14 @@
 var canv = document.getElementById("canvas");
 var canvas = canv.getContext("2d");
 
-class bola{
-	constructor(x,y){
-		this.x = x;
-		this.y = y;
-	}
-	
-	drawBola(){
-		paint(this);
-	}
-}
-
+var keyDownA=false,keyDownS=false,keyDownD=false,keyDownW=false;
 var ball;
+var parede;
 
 $(document).ready(function(){
 	setup();
 });
 
-var keyDownA=false,keyDownS=false,keyDownD=false,keyDownW=false;
 $(document).keydown(function(ev){
 	switch(String.fromCharCode(ev.which)){
 		case 'A':
@@ -55,30 +45,39 @@ $(document).keyup(function(ev){
 function setup(){
 	canv.focus();
 	ball = new bola(50,50);
+	ball.setWidth(10)
+	ball.setHeight(10);
+	ball.setPosition(250,250);
+	parede = new wall(500,500);
+	parede.setPosition(100,100);
 	setInterval(function(){ tick() }, 1);
 	tick();
 }
 
 function tick(){
-	if(keyDownA){
-		ball.x--;
-	} 
-	if(keyDownS){
-		ball.y++;
-	} 
-	if(keyDownD){
-		ball.x++;
-	} 
-	if(keyDownW){
-		ball.y--;
+	parede.drawWall(canvas);
+	var colLeft = !parede.collisionLeft(ball.x,ball.y);
+	var colRight = !parede.collisionRight(ball.x,ball.y);
+	var colTop = !parede.collisionTop(ball.x,ball.y);
+	var colBottom = !parede.collisionBottom(ball.x,ball.y);
+	
+	if(colLeft && colRight && colTop && colBottom){
+		ball.move(keyDownA,keyDownS,keyDownD,keyDownW);
+	}else{
+		if(colLeft){
+			ball.x--;
+		}
+		if(colRight){
+			ball.x++;
+		}
+		if(colTop){
+			ball.y--;
+		}
+		if(colBottom){
+			ball.y++;
+		}
 	}
 	
-	ball.drawBola();
-}
-
-function paint(obj){
-	canvas.fillStyle = "white";
-	canvas.fillRect(0,0,1000,1000);
-	canvas.fillStyle = "#FF0000";
-	canvas.fillRect(obj.x,obj.y,10,10);
+	ball.gravity();
+	ball.drawBola(canvas);
 }
