@@ -4,6 +4,7 @@ class bola{
 		this.y = y;
 		this.velX = 1;
 		this.velY = 1;
+		this.g = 0.1;
 	}
 	
 	setWidth(width){
@@ -11,6 +12,11 @@ class bola{
 	}
 	
 	setHeight(height){
+		this.height = height;
+	}
+	
+	setDimension(width,height){
+		this.width = width;
 		this.height = height;
 	}
 	
@@ -48,6 +54,6 @@ class bola{
 	}
 	
 	gravity(){
-		this.y+=0.1;
+		this.y+=this.g;
 	}
 }
