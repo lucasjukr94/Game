@@ -3,7 +3,7 @@ var canvas = canv.getContext("2d");
 
 var keyDownA=false,keyDownS=false,keyDownD=false,keyDownW=false;
 var ball;
-var tijolo;
+var tijolo = [];
 var parede;
 
 $(document).ready(function(){
@@ -49,7 +49,9 @@ function setup(){
 	ball.setDimension(10,10);
 	ball.setPosition(250,250);
 	parede = new wall(800,800);
-	tijolo = new tile(250,250,10,10);
+	for(var i=0;i<10;i++){
+		tijolo.push(new tile(250+50*i,250,10,10));
+	}
 	setInterval(function(){ tick() }, 1);
 	tick();
 }
@@ -78,7 +80,9 @@ function tick(){
 		}
 	}
 	
-	tijolo.drawTile(canvas);
+	for(var i=0;i<10;i++){
+		tijolo[i].drawTile(canvas);
+	}
 	
 	ball.gravity();
 	ball.drawBola(canvas);
