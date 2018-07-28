@@ -1,23 +1,50 @@
-class tile{
+class tile extends entity{
 	constructor(x,y,width,height){
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super();
+		super.setPosition(x,y);
+		super.setDimension(width,height);
+		this.filled = false;
 	}
 	
-	setPosition(x,y){
-		this.x = x;
-		this.y = y;
+	setFill(fill){
+		this.filled = fill;
 	}
 	
-	setDimension(width,height){
-		this.width = width;
-		this.height = height;
+	collisionTop(x,y){
+		if(this.y<=y){
+			return false;
+		}
+		return true;
+	}
+	
+	collisionBottom(x,y){
+		if(this.y+this.height>=y){
+			return false;
+		}
+		return true;
+	}
+	
+	collisionLeft(x,y){
+		if(this.x<=x){
+			return false;
+		}
+		return true;
+	}
+	
+	collisionRight(x,y){
+		if(this.x+this.width>=x){
+			return false;
+		}
+		return true;
 	}
 	
 	drawTile(canvas){
-		canvas.fillStyle = "yellow";
-		canvas.fillRect(this.x,this.y,this.width,this.height);
+		if(this.filled){
+			canvas.fillStyle="yellow";
+			canvas.fillRect(this.x,this.y,this.width,this.height);
+		}else{
+			canvas.strokeStyle="green";
+			canvas.strokeRect(this.x,this.y,this.width,this.height);
+		}
 	}
 }

@@ -1,28 +1,10 @@
-class bola{
+class bola extends entity{
 	constructor(x,y){
-		this.x = x;
-		this.y = y;
-		this.velX = 1;
-		this.velY = 1;
+		super();
+		super.setPosition(x,y);
+		this.setVelX(1);
+		this.setVelY(1);
 		this.g = 0.1;
-	}
-	
-	setWidth(width){
-		this.width = width;
-	}
-	
-	setHeight(height){
-		this.height = height;
-	}
-	
-	setDimension(width,height){
-		this.width = width;
-		this.height = height;
-	}
-	
-	setPosition(x,y){
-		this.x = x;
-		this.y = y;
 	}
 	
 	setVelX(velX){
@@ -55,5 +37,63 @@ class bola{
 	
 	gravity(){
 		this.y+=this.g;
+	}
+	
+	//Verifica se houve colisão com outra entidade e retorna int indicando o lado colidido
+	//1-left,2-right,3-top,4-bottom
+	collision(entidade){
+		if(this.centerX() <= entidade.x + entidade.width && 
+		this.centerY() >= entidade.y && 
+		this.centerY() <= entidade.y + entidade.height){
+			return 1;
+		}
+		if(this.centerX() >= entidade.x + entidade.width && 
+		this.centerY() >= entidade.y && 
+		this.centerY() <= entidade.y + entidade.height){
+			return 2;
+		}
+		if(this.centerY() >= entidade.y + entidade.height && 
+		this.centerX() >= entidade.x && 
+		this.centerX() <= entidade.x + entidade.width){
+			return 3;
+		}
+		if(this.centerY() <= entidade.y + entidade.height && 
+		this.centerX() >= entidade.x && 
+		this.centerX() <= entidade.x + entidade.width){
+			return 4;
+		}
+		//console.log(0);
+		return 0;
+	}
+	
+	ricochet(entidade){
+		switch(this.collision(entidade)){
+			case 1://left
+				this.x++;
+				break;
+			case 2://right
+				this.x--;
+				break;
+			case 3://top
+				this.y++;
+				break;
+			case 4://bottom
+				this.y--;
+				break;
+			default:
+				this.y-=0.1;
+				break;
+		}
+	}
+	
+	near(entidade){
+		if(this.y < entidade.y + 10 && 
+			this.y > entidade.y - 10 &&
+			this.x < entidade.x + 10 &&
+			this.x > entidade.x - 10){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
