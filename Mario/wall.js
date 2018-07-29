@@ -12,8 +12,24 @@ class wall{
 	}
 	
 	drawWall(canvas){
-		canvas.fillStyle = "black";
-		canvas.fillRect(this.x,this.y,this.width,this.height);
+		var img = new Image();
+		img.src = "img/matrix.jpg";
+		canvas.drawImage(img,this.x,this.y,this.width,this.height);
+	}
+	
+	move(keyDownA,keyDownS,keyDownD,keyDownW){
+		if(keyDownA){
+			this.x = this.x + 1;
+		} 
+		if(keyDownS){
+			this.y = this.y - 1;
+		} 
+		if(keyDownD){
+			this.x = this.x - 1;
+		} 
+		if(keyDownW){
+			this.y = this.y + 1;
+		}
 	}
 	
 	collisionTop(x,y){

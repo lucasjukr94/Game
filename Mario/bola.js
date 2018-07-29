@@ -42,12 +42,12 @@ class bola extends entity{
 	//Verifica se houve colisão com outra entidade e retorna int indicando o lado colidido
 	//1-left,2-right,3-top,4-bottom
 	collision(entidade){
-		if(this.centerX() <= entidade.x + entidade.width && 
+		if(this.x + this.width <= entidade.x && 
 		this.centerY() >= entidade.y && 
 		this.centerY() <= entidade.y + entidade.height){
 			return 1;
 		}
-		if(this.centerX() >= entidade.x + entidade.width && 
+		if(this.x >= entidade.x + entidade.width && 
 		this.centerY() >= entidade.y && 
 		this.centerY() <= entidade.y + entidade.height){
 			return 2;
@@ -62,7 +62,6 @@ class bola extends entity{
 		this.centerX() <= entidade.x + entidade.width){
 			return 4;
 		}
-		//console.log(0);
 		return 0;
 	}
 	
@@ -78,19 +77,16 @@ class bola extends entity{
 				this.y++;
 				break;
 			case 4://bottom
-				this.y--;
-				break;
-			default:
-				this.y-=0.1;
+				this.y-=2;
 				break;
 		}
 	}
 	
-	near(entidade){
-		if(this.y < entidade.y + 10 && 
-			this.y > entidade.y - 10 &&
-			this.x < entidade.x + 10 &&
-			this.x > entidade.x - 10){
+	near(entidade,distance){
+		if(this.y < entidade.y + distance && 
+			this.y > entidade.y - distance &&
+			this.x < entidade.x + distance &&
+			this.x > entidade.x - distance){
 			return true;
 		}else{
 			return false;

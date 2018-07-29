@@ -42,6 +42,9 @@ $(document).keyup(function(ev){
 			break;
 	}
 });
+$(document).mousemove(function(ev){
+	document.getElementById("mousecoord").innerHTML = "X:"+ev.pageX+",Y:"+ev.pageY;
+});
 
 function setup(){
 	canv.focus();
@@ -80,9 +83,7 @@ function tick(){
 	
 	for(var j=0;j<80;j++){
 		for(var i=0;i<80;i++){
-			//detectar colisão somente quando o tile estiver filled
-			//detectar colisão somente quando o tile estiver 1 tile próximo da bola
-			if(tijolos[j][i].filled && ball.near(tijolos[j][i])){
+			if(tijolos[j][i].filled && ball.near(tijolos[j][i],10)){
 				ball.ricochet(tijolos[j][i]);
 			}
 			tijolos[j][i].drawTile(canvas);
@@ -91,6 +92,7 @@ function tick(){
 	
 	if(colLeft && colRight && colTop && colBottom){
 		ball.move(keyDownA,keyDownS,keyDownD,keyDownW);
+		parede.move(keyDownA,keyDownS,keyDownD,keyDownW);
 	}else{
 		if(colLeft){
 			ball.x--;
