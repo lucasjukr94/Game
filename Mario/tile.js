@@ -10,6 +10,21 @@ class tile extends entity{
 		this.filled = fill;
 	}
 	
+	move(keyDownA,keyDownS,keyDownD,keyDownW){
+		if(keyDownA){
+			this.x = this.x + 0.5;
+		} 
+		if(keyDownS){
+			this.y = this.y - 0.5;
+		} 
+		if(keyDownD){
+			this.x = this.x - 0.5;
+		} 
+		if(keyDownW){
+			this.y = this.y + 0.5;
+		}
+	}
+	
 	collisionTop(x,y){
 		if(this.y<=y){
 			return false;
