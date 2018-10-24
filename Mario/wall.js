@@ -12,6 +12,10 @@ class wall{
 	}
 	
 	drawWall(canvas){
+		/*
+		Esse método funciona(não acontece flickering) apenas em browser, se for em phonegap, não funciona,
+		é necessário usar o img.onload = function(){canvas.drawImage(...);};img.src = "...";
+		*/
 		var img = new Image();
 		img.src = "img/matrix.jpg";
 		canvas.drawImage(img,this.x,this.y,this.width,this.height);
